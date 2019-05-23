@@ -12,14 +12,38 @@ class App extends Component {
     };
   }
 
-  async login() {}
+  async login() {
+    const {email, password}= this.state
+    const result= await axios.post('/auth/login', {
+      email, 
+      password
+    })
+    this.setState({loggedInUser: result.data, email: '', password: ''})
+  }
 
-  async signup() {}
+  async signup() {
+    const {email, password}= this.state
+    const result= await axios.post('/auth/signup', {
+      email, 
+      password
+    })
 
-  logout() {}
+    this.setState({
+      loggedInUser: result.data, 
+      email: '',
+      password:''
+    })
+  }
+
+  logout() {
+    axios.get('/auth/logout')
+    this.setState({loggedInUser:{}})
+  }
 
   render() {
+    
     let { loggedInUser, email, password } = this.state;
+    console.log(loggedInUser)
     return (
       <div className="form-container done">
         <div className="login-form">
